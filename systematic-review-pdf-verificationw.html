@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systematic Review Consolidator - PDF Verification Edition</title>
+    
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .main-container {
+            display: flex;
+            height: 100vh;
+            background: white;
+        }
+        
+        /* Left Panel - Data Table */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #dee2e6;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #5e72e4 0%, #825ee4 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 12px;
+        }
+        
+        .controls {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #5e72e4;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .file-input-label:hover {
+            background: #4c63d2;
+            transform: translateY(-1px);
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #218838;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .stats {
+            padding: 10px 15px;
+            background: #e3f2fd;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 12px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stat-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .stat-value {
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        .table-container {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th {
+            background: #f1f3f5;
+            padding: 10px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #e9ecef;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .cell-with-source {
+            background: #e7f5ff;
+        }
+        
+        .cell-with-source:hover {
+            background: #74c0fc;
+        }
+        
+        .active-cell {
+            background: #ffec99 !important;
+            font-weight: bold;
+        }
+        
+        .source-indicator {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #28a745;
+            opacity: 0.8;
+        }
+        
+        .no-source-indicator {
+            background: #ffc107;
+        }
+        
+        /* Right Panel - PDF Viewer */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .pdf-controls {
+            padding: 10px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .pdf-controls-left {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .pdf-controls-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .pdf-viewer-container {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+            background: #525659;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .pdf-page-container {
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        #pdfCanvas {
+            display: block;
+            background: white;
+        }
+        
+        .highlight-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .highlight-box {
+            position: absolute;
+            border: 3px solid #ff6b6b;
+            background: rgba(255, 107, 107, 0.2);
+            pointer-events: none;
+            animation: pulse 2s infinite;
+            border-radius: 3px;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .pdf-info {
+            padding: 10px;
+            background: #e8f5e9;
+            border-bottom: 1px solid #c3e6cb;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .no-pdf-loaded {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #6c757d;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .no-pdf-loaded svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .modal-close:hover {
+            color: #000;
+        }
+        
+        .json-input {
+            width: 100%;
+            height: 250px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        
+        .source-details {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+        
+        .verbatim-quote {
+            background: white;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            margin: 10px 0;
+            font-style: italic;
+            color: #495057;
+            font-size: 12px;
+        }
+        
+        .location-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+        
+        .location-item {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .location-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+        
+        .search-box {
+            position: relative;
+            flex-grow: 0;
+            width: 200px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        /* Zoom controls */
+        .zoom-controls {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .zoom-button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .zoom-button:hover {
+            background: #f8f9fa;
+        }
+        
+        .zoom-level {
+            font-size: 12px;
+            color: #495057;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        input[type="file"] {
+            font-size: 12px;
+        }
+        
+        /* Page navigation */
+        .page-nav {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .page-input {
+            width: 50px;
+            padding: 4px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .page-total {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .resizer {
+            width: 5px;
+            background: #dee2e6;
+            cursor: col-resize;
+            position: relative;
+        }
+        
+        .resizer:hover {
+            background: #adb5bd;
+        }
+        
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #5e72e4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Left Panel - Data Table -->
+        <div class="left-panel" id="leftPanel">
+            <div class="header">
+                <h1>📊 Systematic Review with PDF Verification</h1>
+                <p>Click cells to highlight source in PDF</p>
+            </div>
+            
+            <div class="controls">
+                <div class="file-input-wrapper">
+                    <input type="file" id="jsonInput" class="file-input" accept=".json" multiple>
+                    <label for="jsonInput" class="file-input-label">📁 Load JSONs</label>
+                </div>
+                <button class="btn-secondary" onclick="showColumnSelector()">⚙️ Columns</button>
+                <button class="btn-warning" onclick="showVerificationReport()">📊 Report</button>
+                <button class="btn-secondary" onclick="exportToCSV()">💾 Export</button>
+                <button class="btn-danger" onclick="clearAll()">🗑️ Clear</button>
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Studies:</span>
+                    <span class="stat-value" id="studyCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Patients:</span>
+                    <span class="stat-value" id="patientCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Verified:</span>
+                    <span class="stat-value" id="verifiedCount">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Current PDF:</span>
+                    <span class="stat-value" id="currentPdf">None</span>
+                </div>
+            </div>
+            
+            <div class="table-container" id="tableContainer">
+                <div style="padding: 40px; text-align: center; color: #6c757d;">
+                    <p>Load extraction JSON files to begin</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Resizer -->
+        <div class="resizer" id="resizer"></div>
+        
+        <!-- Right Panel - PDF Viewer -->
+        <div class="right-panel">
+            <div class="pdf-controls">
+                <div class="pdf-controls-left">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="pdfInput" class="file-input" accept=".pdf">
+                        <label for="pdfInput" class="file-input-label">📄 Load PDF</label>
+                    </div>
+                    <div class="page-nav">
+                        <button class="zoom-button" onclick="previousPage()">◀</button>
+                        <input type="number" class="page-input" id="pageNumber" value="1" min="1" onchange="goToPage()">
+                        <span class="page-total">/ <span id="pageCount">0</span></span>
+                        <button class="zoom-button" onclick="nextPage()">▶</button>
+                    </div>
+                </div>
+                <div class="pdf-controls-right">
+                    <div class="zoom-controls">
+                        <button class="zoom-button" onclick="zoomOut()">-</button>
+                        <span class="zoom-level" id="zoomLevel">100%</span>
+                        <button class="zoom-button" onclick="zoomIn()">+</button>
+                        <button class="btn-secondary" onclick="fitWidth()">Fit Width</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pdf-info" id="pdfInfo" style="display: none;">
+                <span id="infoText">Click a table cell to highlight its source in the PDF</span>
+                <button class="btn-secondary" onclick="clearHighlights()">Clear Highlights</button>
+            </div>
+            
+            <div class="pdf-viewer-container" id="pdfViewerContainer">
+                <div class="no-pdf-loaded" id="noPdfMessage">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <h3>No PDF Loaded</h3>
+                    <p>Load a PDF to see highlighted sources when clicking table cells</p>
+                </div>
+                <div class="pdf-page-container" id="pdfPageContainer" style="display: none;">
+                    <canvas id="pdfCanvas"></canvas>
+                    <div class="highlight-overlay" id="highlightOverlay"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for column selection -->
+    <div class="modal" id="columnModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeColumnSelector()">✕</span>
+            <h3>Select Columns to Display</h3>
+            <div style="margin: 10px 0; display: flex; gap: 10px;">
+                <button class="btn-secondary" onclick="selectAllColumns()">Select All</button>
+                <button class="btn-secondary" onclick="deselectAllColumns()">Deselect All</button>
+                <button class="btn-primary" onclick="applyColumnSelection()">Apply</button>
+            </div>
+            <div id="columnSelector" style="max-height: 400px; overflow-y: auto; padding: 10px;"></div>
+        </div>
+    </div>
+    
+    <!-- Modal for verification report -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeVerificationReport()">✕</span>
+            <h3>Extraction Verification Report</h3>
+            <div id="reportContent"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        // Global variables
+        let studies = [];
+        let selectedColumns = new Set();
+        let allColumns = new Map();
+        let sourceMapping = new Map();
+        let chunks = new Map();
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let scale = 1.0;
+        let canvas = document.getElementById('pdfCanvas');
+        let ctx = canvas.getContext('2d');
+        let currentHighlights = [];
+        
+        // Default columns
+        const defaultColumns = [
+            'citation.authors',
+            'citation.year', 
+            'citation.title',
+            'study_population.total_n',
+            'interventions.surgical_types'
+        ];
+        
+        // Initialize event listeners
+        document.getElementById('jsonInput').addEventListener('change', handleJSONFiles);
+        document.getElementById('pdfInput').addEventListener('change', handlePDFFile);
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+        
+        // Panel resizing
+        let isResizing = false;
+        const resizer = document.getElementById('resizer');
+        const leftPanel = document.getElementById('leftPanel');
+        
+        resizer.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+            });
+        });
+        
+        function handleMouseMove(e) {
+            if (!isResizing) return;
+            const containerWidth = document.querySelector('.main-container').offsetWidth;
+            const leftWidth = e.clientX / containerWidth * 100;
+            if (leftWidth > 30 && leftWidth < 70) {
+                leftPanel.style.flex = `0 0 ${leftWidth}%`;
+            }
+        }
+        
+        // JSON file handling
+        function handleJSONFiles(event) {
+            const files = event.target.files;
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const json = JSON.parse(e.target.result);
+                        addStudy(json, file.name);
+                    } catch (error) {
+                        alert(`Error parsing ${file.name}: ${error.message}`);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+        
+        function addStudy(jsonData, fileName) {
+            const studyId = `study_${studies.length}`;
+            
+            let structuredData = {};
+            let studyChunks = [];
+            
+            // Extract data based on format
+            if (jsonData.extraction) {
+                structuredData = jsonData.extraction;
+                studyChunks = jsonData.chunks || [];
+            } else if (jsonData.metadata) {
+                structuredData = jsonData.metadata.extraction || jsonData.metadata;
+                studyChunks = jsonData.chunks || [];
+            } else if (jsonData.extracted_schema) {
+                structuredData = jsonData.extracted_schema;
+                studyChunks = jsonData.chunks || [];
+            } else {
+                structuredData = jsonData;
+            }
+            
+            // Store chunks
+            if (studyChunks.length > 0) {
+                chunks.set(studyId, studyChunks);
+                mapDataToChunks(structuredData, studyChunks, studyId);
+            }
+            
+            // Add metadata
+            structuredData._meta = {
+                studyId: studyId,
+                fileName: fileName,
+                hasChunks: studyChunks.length > 0,
+                chunkCount: studyChunks.length
+            };
+            
+            studies.push(structuredData);
+            discoverColumns(structuredData);
+            
+            // Set default columns for first study
+            if (studies.length === 1) {
+                defaultColumns.forEach(col => {
+                    if (allColumns.has(col)) {
+                        selectedColumns.add(col);
+                    }
+                });
+                if (selectedColumns.size === 0) {
+                    let count = 0;
+                    for (let col of allColumns.keys()) {
+                        if (!col.startsWith('_meta')) {
+                            selectedColumns.add(col);
+                            if (++count >= 5) break;
+                        }
+                    }
+                }
+            }
+            
+            updateDisplay();
+        }
+        
+        function mapDataToChunks(data, studyChunks, studyId) {
+            // Try different mapping strategies
+            mapChunkReferences(data, studyChunks, studyId);
+            mapByTextMatching(data, studyChunks, studyId);
+        }
+        
+        function mapChunkReferences(obj, studyChunks, studyId, path = '') {
+            for (let key in obj) {
+                const currentPath = path ? `${path}.${key}` : key;
+                
+                if (obj[key] && typeof obj[key] === 'object') {
+                    if (obj[key].chunk_references && Array.isArray(obj[key].chunk_references)) {
+                        const refIds = obj[key].chunk_references;
+                        const relevantChunks = studyChunks.filter(c => refIds.includes(c.chunk_id));
+                        if (relevantChunks.length > 0) {
+                            sourceMapping.set(`${studyId}:${currentPath}`, relevantChunks);
+                        }
+                    } else {
+                        mapChunkReferences(obj[key], studyChunks, studyId, currentPath);
+                    }
+                }
+            }
+        }
+        
+        function mapByTextMatching(data, studyChunks, studyId, path = '') {
+            for (let key in data) {
+                const currentPath = path ? `${path}.${key}` : key;
+                const value = data[key];
+                
+                if (value && typeof value === 'string' && value.length > 10) {
+                    const searchText = value.toLowerCase().substring(0, 50);
+                    const matchingChunks = studyChunks.filter(chunk => {
+                        return chunk.text && chunk.text.toLowerCase().includes(searchText);
+                    });
+                    
+                    if (matchingChunks.length > 0) {
+                        const mapKey = `${studyId}:${currentPath}`;
+                        if (!sourceMapping.has(mapKey)) {
+                            sourceMapping.set(mapKey, matchingChunks);
+                        }
+                    }
+                } else if (value && typeof value === 'object' && !Array.isArray(value)) {
+                    mapByTextMatching(value, studyChunks, studyId, currentPath);
+                }
+            }
+        }
+        
+        function discoverColumns(obj, prefix = '') {
+            for (let key in obj) {
+                if (key === '_meta') continue;
+                
+                const path = prefix ? `${prefix}.${key}` : key;
+                
+                if (obj[key] === null || obj[key] === undefined) {
+                    continue;
+                }
+                
+                if (Array.isArray(obj[key])) {
+                    allColumns.set(path, 'array');
+                } else if (typeof obj[key] === 'object') {
+                    discoverColumns(obj[key], path);
+                } else {
+                    allColumns.set(path, typeof obj[key]);
+                }
+            }
+        }
+        
+        function getNestedValue(obj, path) {
+            const keys = path.split('.');
+            let value = obj;
+            
+            for (let key of keys) {
+                if (value === null || value === undefined) return '';
+                value = value[key];
+            }
+            
+            if (Array.isArray(value)) {
+                return value.join('; ');
+            }
+            
+            return value || '';
+        }
+        
+        function updateDisplay() {
+            const container = document.getElementById('tableContainer');
+            
+            if (studies.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center; color: #6c757d;">Load extraction JSON files to begin</div>';
+                updateStats();
+                return;
+            }
+            
+            let html = '<table><thead><tr>';
+            
+            // Headers
+            const columnsArray = Array.from(selectedColumns);
+            columnsArray.forEach(col => {
+                const displayName = col.split('.').pop().replace(/_/g, ' ');
+                html += `<th>${displayName}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+            
+            // Data rows
+            studies.forEach((study, index) => {
+                html += '<tr>';
+                columnsArray.forEach(col => {
+                    const value = getNestedValue(study, col);
+                    const studyId = study._meta?.studyId || `study_${index}`;
+                    const mapKey = `${studyId}:${col}`;
+                    const hasSource = sourceMapping.has(mapKey);
+                    
+                    html += `<td class="${hasSource ? 'cell-with-source' : ''}" 
+                             data-study-id="${studyId}"
+                             data-column="${col}"
+                             onclick="handleCellClick(this)"
+                             title="${escapeHtml(String(value))}">`;
+                    
+                    if (hasSource) {
+                        html += '<span class="source-indicator"></span>';
+                    }
+                    
+                    const displayValue = String(value).substring(0, 50);
+                    html += escapeHtml(displayValue);
+                    if (String(value).length > 50) html += '...';
+                    html += '</td>';
+                });
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+            updateStats();
+        }
+        
+        function handleCellClick(cell) {
+            // Remove previous active cell highlighting
+            document.querySelectorAll('.active-cell').forEach(c => {
+                c.classList.remove('active-cell');
+            });
+            
+            // Highlight active cell
+            cell.classList.add('active-cell');
+            
+            const studyId = cell.getAttribute('data-study-id');
+            const column = cell.getAttribute('data-column');
+            const mapKey = `${studyId}:${column}`;
+            
+            if (sourceMapping.has(mapKey)) {
+                const sourceChunks = sourceMapping.get(mapKey);
+                highlightInPDF(sourceChunks);
+                
+                // Update info text
+                document.getElementById('infoText').textContent = 
+                    `Highlighting: ${column} (${sourceChunks.length} source${sourceChunks.length > 1 ? 's' : ''})`;
+            } else {
+                clearHighlights();
+                document.getElementById('infoText').textContent = 'No source verification available for this cell';
+            }
+        }
+        
+        // PDF handling
+        function handlePDFFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const fileReader = new FileReader();
+                fileReader.onload = function() {
+                    const typedarray = new Uint8Array(this.result);
+                    loadPDF(typedarray, file.name);
+                };
+                fileReader.readAsArrayBuffer(file);
+            }
+        }
+        
+        function loadPDF(data, fileName) {
+            pdfjsLib.getDocument(data).promise.then(function(pdf) {
+                pdfDoc = pdf;
+                document.getElementById('pageCount').textContent = pdf.numPages;
+                document.getElementById('currentPdf').textContent = fileName;
+                document.getElementById('noPdfMessage').style.display = 'none';
+                document.getElementById('pdfPageContainer').style.display = 'block';
+                document.getElementById('pdfInfo').style.display = 'flex';
+                
+                // Initial page rendering
+                renderPage(pageNum);
+            });
+        }
+        
+        function renderPage(num) {
+            pageRendering = true;
+            
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({scale: scale});
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                
+                const renderTask = page.render(renderContext);
+                
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                    
+                    // Reapply highlights after page render
+                    if (currentHighlights.length > 0) {
+                        const pageHighlights = currentHighlights.filter(h => h.page === num - 1);
+                        drawHighlights(pageHighlights, viewport);
+                    }
+                });
+            });
+            
+            document.getElementById('pageNumber').value = num;
+        }
+        
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+        
+        function previousPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+        
+        function nextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+        
+        function goToPage() {
+            const input = document.getElementById('pageNumber');
+            const num = parseInt(input.value);
+            
+            if (num >= 1 && num <= pdfDoc.numPages) {
+                pageNum = num;
+                queueRenderPage(pageNum);
+            } else {
+                input.value = pageNum;
+            }
+        }
+        
+        function zoomIn() {
+            scale = Math.min(scale * 1.2, 3.0);
+            document.getElementById('zoomLevel').textContent = Math.round(scale * 100) + '%';
+            queueRenderPage(pageNum);
+        }
+        
+        function zoomOut() {
+            scale = Math.max(scale / 1.2, 0.5);
+            document.getElementById('zoomLevel').textContent = Math.round(scale * 100) + '%';
+            queueRenderPage(pageNum);
+        }
+        
+        function fitWidth() {
+            const container = document.getElementById('pdfViewerContainer');
+            const containerWidth = container.clientWidth - 40; // Account for padding
+            
+            if (pdfDoc) {
+                pdfDoc.getPage(pageNum).then(function(page) {
+                    const viewport = page.getViewport({scale: 1});
+                    scale = containerWidth / viewport.width;
+                    document.getElementById('zoomLevel').textContent = Math.round(scale * 100) + '%';
+                    queueRenderPage(pageNum);
+                });
+            }
+        }
+        
+        function highlightInPDF(sourceChunks) {
+            if (!pdfDoc) return;
+            
+            clearHighlights();
+            currentHighlights = [];
+            
+            sourceChunks.forEach(chunk => {
+                if (chunk.grounding && chunk.grounding.length > 0) {
+                    chunk.grounding.forEach(ground => {
+                        currentHighlights.push({
+                            page: ground.page,
+                            box: ground.box
+                        });
+                    });
+                }
+            });
+            
+            // Go to first highlight page
+            if (currentHighlights.length > 0) {
+                const firstPage = currentHighlights[0].page + 1;
+                if (firstPage !== pageNum) {
+                    pageNum = firstPage;
+                    queueRenderPage(pageNum);
+                } else {
+                    // Draw highlights on current page
+                    pdfDoc.getPage(pageNum).then(function(page) {
+                        const viewport = page.getViewport({scale: scale});
+                        const pageHighlights = currentHighlights.filter(h => h.page === pageNum - 1);
+                        drawHighlights(pageHighlights, viewport);
+                    });
+                }
+            }
+        }
+        
+        function drawHighlights(highlights, viewport) {
+            const overlay = document.getElementById('highlightOverlay');
+            overlay.innerHTML = '';
+            
+            highlights.forEach(highlight => {
+                if (highlight.box) {
+                    const box = document.createElement('div');
+                    box.className = 'highlight-box';
+                    
+                    // Convert relative coordinates to pixel coordinates
+                    const left = highlight.box.l * viewport.width;
+                    const top = highlight.box.t * viewport.height;
+                    const width = (highlight.box.r - highlight.box.l) * viewport.width;
+                    const height = (highlight.box.b - highlight.box.t) * viewport.height;
+                    
+                    box.style.left = `${left}px`;
+                    box.style.top = `${top}px`;
+                    box.style.width = `${width}px`;
+                    box.style.height = `${height}px`;
+                    
+                    overlay.appendChild(box);
+                }
+            });
+        }
+        
+        function clearHighlights() {
+            const overlay = document.getElementById('highlightOverlay');
+            overlay.innerHTML = '';
+            currentHighlights = [];
+            
+            document.querySelectorAll('.active-cell').forEach(c => {
+                c.classList.remove('active-cell');
+            });
+        }
+        
+        // Column selection
+        function showColumnSelector() {
+            const modal = document.getElementById('columnModal');
+            const selector = document.getElementById('columnSelector');
+            selector.innerHTML = '';
+            
+            allColumns.forEach((type, col) => {
+                if (col.startsWith('_meta')) return;
+                
+                const div = document.createElement('div');
+                div.style.padding = '5px';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = col;
+                checkbox.checked = selectedColumns.has(col);
+                checkbox.style.marginRight = '10px';
+                
+                const label = document.createElement('label');
+                label.textContent = col;
+                label.style.cursor = 'pointer';
+                
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                selector.appendChild(div);
+            });
+            
+            modal.classList.add('active');
+        }
+        
+        function closeColumnSelector() {
+            document.getElementById('columnModal').classList.remove('active');
+        }
+        
+        function selectAllColumns() {
+            document.querySelectorAll('#columnSelector input[type="checkbox"]').forEach(cb => {
+                cb.checked = true;
+            });
+        }
+        
+        function deselectAllColumns() {
+            document.querySelectorAll('#columnSelector input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+        }
+        
+        function applyColumnSelection() {
+            selectedColumns.clear();
+            document.querySelectorAll('#columnSelector input[type="checkbox"]:checked').forEach(cb => {
+                selectedColumns.add(cb.value);
+            });
+            updateDisplay();
+            closeColumnSelector();
+        }
+        
+        // Verification report
+        function showVerificationReport() {
+            const modal = document.getElementById('reportModal');
+            const content = document.getElementById('reportContent');
+            
+            let report = '<h4>Extraction Quality Report</h4>';
+            
+            let totalFields = 0;
+            let verifiedFields = 0;
+            
+            studies.forEach((study, index) => {
+                const studyId = study._meta?.studyId || `study_${index}`;
+                selectedColumns.forEach(col => {
+                    const value = getNestedValue(study, col);
+                    if (value) {
+                        totalFields++;
+                        if (sourceMapping.has(`${studyId}:${col}`)) {
+                            verifiedFields++;
+                        }
+                    }
+                });
+            });
+            
+            const verificationRate = totalFields > 0 ? 
+                Math.round((verifiedFields / totalFields) * 100) : 0;
+            
+            report += `<p><strong>Overall Verification Rate:</strong> ${verificationRate}% (${verifiedFields}/${totalFields} fields)</p>`;
+            
+            // Per-study breakdown
+            report += '<h5>Per-Study Analysis:</h5>';
+            report += '<table style="width: 100%; border-collapse: collapse;">';
+            report += '<tr><th style="border: 1px solid #ddd; padding: 8px;">Study</th>';
+            report += '<th style="border: 1px solid #ddd; padding: 8px;">Verification Rate</th></tr>';
+            
+            studies.forEach((study, index) => {
+                const fileName = study._meta?.fileName || `Study ${index + 1}`;
+                const studyId = study._meta?.studyId || `study_${index}`;
+                
+                let studyTotal = 0;
+                let studyVerified = 0;
+                
+                selectedColumns.forEach(col => {
+                    const value = getNestedValue(study, col);
+                    if (value) {
+                        studyTotal++;
+                        if (sourceMapping.has(`${studyId}:${col}`)) {
+                            studyVerified++;
+                        }
+                    }
+                });
+                
+                const rate = studyTotal > 0 ? Math.round((studyVerified / studyTotal) * 100) : 0;
+                
+                report += `<tr><td style="border: 1px solid #ddd; padding: 8px;">${escapeHtml(fileName)}</td>`;
+                report += `<td style="border: 1px solid #ddd; padding: 8px;">${rate}% (${studyVerified}/${studyTotal})</td></tr>`;
+            });
+            
+            report += '</table>';
+            
+            content.innerHTML = report;
+            modal.classList.add('active');
+        }
+        
+        function closeVerificationReport() {
+            document.getElementById('reportModal').classList.remove('active');
+        }
+        
+        // Export functionality
+        function exportToCSV() {
+            if (studies.length === 0) {
+                alert('No data to export');
+                return;
+            }
+            
+            const columnsArray = Array.from(selectedColumns);
+            let csv = columnsArray.map(col => `"${col}"`).join(',') + ',Verified\n';
+            
+            studies.forEach((study, index) => {
+                const studyId = study._meta?.studyId || `study_${index}`;
+                const row = columnsArray.map(col => {
+                    const value = getNestedValue(study, col);
+                    const hasSource = sourceMapping.has(`${studyId}:${col}`);
+                    return `"${String(value).replace(/"/g, '""')}"`;
+                });
+                
+                // Add verification status
+                const verifiedCount = columnsArray.filter(col => 
+                    sourceMapping.has(`${studyId}:${col}`)
+                ).length;
+                row.push(`"${verifiedCount}/${columnsArray.length}"`);
+                
+                csv += row.join(',') + '\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `systematic_review_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function clearAll() {
+            if (studies.length > 0 && !confirm('Clear all data?')) return;
+            
+            studies = [];
+            selectedColumns.clear();
+            allColumns.clear();
+            sourceMapping.clear();
+            chunks.clear();
+            currentHighlights = [];
+            
+            updateDisplay();
+            clearHighlights();
+        }
+        
+        function handleSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+        
+        function updateStats() {
+            document.getElementById('studyCount').textContent = studies.length;
+            
+            let totalPatients = 0;
+            studies.forEach(study => {
+                const n = getNestedValue(study, 'study_population.total_n');
+                if (n && !isNaN(n)) {
+                    totalPatients += parseInt(n);
+                }
+            });
+            document.getElementById('patientCount').textContent = totalPatients;
+            
+            // Calculate verification rate
+            let totalFields = 0;
+            let verifiedFields = 0;
+            
+            studies.forEach((study, index) => {
+                const studyId = study._meta?.studyId || `study_${index}`;
+                selectedColumns.forEach(col => {
+                    const value = getNestedValue(study, col);
+                    if (value) {
+                        totalFields++;
+                        if (sourceMapping.has(`${studyId}:${col}`)) {
+                            verifiedFields++;
+                        }
+                    }
+                });
+            });
+            
+            const rate = totalFields > 0 ? Math.round((verifiedFields / totalFields) * 100) : 0;
+            document.getElementById('verifiedCount').textContent = `${rate}%`;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

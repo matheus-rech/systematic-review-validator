@@ -1,0 +1,581 @@
+{
+  "metadata": {
+    "citation": {
+      "authors": {
+        "value": "Desirée Lindeskog, Alexander Lilja-Cyron, Jesper Kelsen, Marianne Juhler",
+        "chunk_references": [
+          "3ec941db-567f-4f98-ba2c-d7cf2b040143"
+        ]
+      },
+      "year": {
+        "value": 2019,
+        "chunk_references": [
+          "8c5e941d-f5ee-4ecd-8847-6de81f34c07c"
+        ]
+      },
+      "title": {
+        "value": "Long-term functional outcome after decompressive suboccipital craniectomy for space-occupying cerebellar infarction",
+        "chunk_references": [
+          "6f2c09f6-880f-4bd1-be3b-c1ba09c3df0c"
+        ]
+      },
+      "journal": {
+        "value": "Clinical Neurology and Neurosurgery",
+        "chunk_references": [
+          "8c5e941d-f5ee-4ecd-8847-6de81f34c07c"
+        ]
+      },
+      "doi": {
+        "value": "10.1016/j.clineuro.2018.11.023",
+        "chunk_references": [
+          "783757fc-137c-4f73-9412-6c1acf14f64d"
+        ]
+      },
+      "pmid": {
+        "value": "",
+        "chunk_references": []
+      },
+      "country": {
+        "value": "Denmark",
+        "chunk_references": [
+          "e3145b8b-d9c1-4aea-b90e-8e8b9e3d92c5"
+        ]
+      },
+      "centers": {
+        "value": "Rigshospitalet, Copenhagen",
+        "chunk_references": [
+          "e3145b8b-d9c1-4aea-b90e-8e8b9e3d92c5"
+        ]
+      },
+      "funding": {
+        "value": "This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.",
+        "chunk_references": [
+          "d66cf526-5816-430b-a09e-a8e58afe0882"
+        ]
+      },
+      "conflicts_of_interest": {
+        "value": "None.",
+        "chunk_references": [
+          "b724fa27-7cfb-4a1d-a3b2-34a9fb429876"
+        ]
+      },
+      "registration": {
+        "value": "",
+        "chunk_references": []
+      },
+      "raw_citation": {
+        "value": "Lindeskog D, Lilja-Cyron A, Kelsen J, Juhler M. Long-term functional outcome after decompressive suboccipital craniectomy for space-occupying cerebellar infarction. Clinical Neurology and Neurosurgery. 2019;176:47–52. doi:10.1016/j.clineuro.2018.11.023",
+        "chunk_references": [
+          "8c5e941d-f5ee-4ecd-8847-6de81f34c07c",
+          "6f2c09f6-880f-4bd1-be3b-c1ba09c3df0c",
+          "783757fc-137c-4f73-9412-6c1acf14f64d"
+        ]
+      }
+    },
+    "eligibility_picott": {
+      "population": {
+        "value": "All patients treated with SDC for a cerebellar infarction at Rigshospitalet (Copenhagen, Denmark) between January 2009 and October 2015 were included. Exclusion: missing 1-year follow-up.",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      },
+      "intervention": {
+        "value": "Suboccipital decompressive craniectomy (SDC) for space-occupying cerebellar infarction.",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      },
+      "comparator": {
+        "value": "",
+        "chunk_references": []
+      },
+      "outcomes": {
+        "value": "Long-term functional outcome at 1 year, measured by modified Rankin Scale (mRS).",
+        "chunk_references": [
+          "85d5eb34-bc4e-483c-bcc7-f0e1f876b178"
+        ]
+      },
+      "timing": {
+        "value": "One year after SDC.",
+        "chunk_references": [
+          "85d5eb34-bc4e-483c-bcc7-f0e1f876b178"
+        ]
+      },
+      "type": {
+        "value": "Retrospective cohort study.",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      },
+      "picott_met": {
+        "value": "Yes",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      }
+    },
+    "study_population": {
+      "total_n": {
+        "value": 22,
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "surgical_n": {
+        "value": 22,
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "control_n": {
+        "value": 0,
+        "chunk_references": []
+      },
+      "age_median": {
+        "value": 53,
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "age_iqr": {
+        "value": "45-62",
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "sex_male_n": {
+        "value": 16,
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "sex_female_n": {
+        "value": 6,
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "prestroke_mrs": {
+        "value": "previous functional independence",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      },
+      "nihss_gcs": {
+        "value": "Preoperative GCS (median, IQR): 8 (5-10)",
+        "chunk_references": [
+          "00d3befd-fb35-4eaa-8789-48eff4a950f0"
+        ]
+      },
+      "anticoagulation": {
+        "value": "",
+        "chunk_references": []
+      },
+      "treatments": {
+        "value": "External ventricular drainage (EVD) in 22/22, EVD before SDC in 9/22, infarct evacuation in 14/22, resection of C1 arch in 2/22.",
+        "chunk_references": [
+          "b26b0052-f26e-4f07-82a1-3d2bab3df0ad"
+        ]
+      }
+    },
+    "surgical_indications": {},
+    "imaging_volumetry": {
+      "vascular_territory": {
+        "value": "PICA: 19/22 (86%), SCA: 10/22 (46%), AICA: 8/22 (36%)",
+        "chunk_references": [
+          "a206e8fa-4ab5-4dd0-8869-1cffd4c53d3d"
+        ]
+      },
+      "infarct_volume": {
+        "value": "",
+        "chunk_references": []
+      },
+      "edema_dynamics": {
+        "value": "Maximum swelling is often reached two to four days after stroke ictus.",
+        "chunk_references": [
+          "b8688b03-1d8a-42a6-b16e-70df1fc0bc4e"
+        ]
+      },
+      "peak_swelling_window": {
+        "value": "2–4 days after stroke ictus",
+        "chunk_references": [
+          "b8688b03-1d8a-42a6-b16e-70df1fc0bc4e"
+        ]
+      },
+      "brainstem_involvement": {
+        "value": "Brainstem infarction in 4/22 (18%)",
+        "chunk_references": [
+          "a206e8fa-4ab5-4dd0-8869-1cffd4c53d3d"
+        ]
+      },
+      "supratentorial_involvement": {
+        "value": "",
+        "chunk_references": []
+      }
+    },
+    "interventions": {
+      "surgical_types": {
+        "value": "Suboccipital decompressive craniectomy (SDC), optional resection of C1-arch, duraplasty, infarct evacuation.",
+        "chunk_references": [
+          "89ed6c33-3b85-47f4-8dd4-43ac730c98f7"
+        ]
+      },
+      "timing": {
+        "value": "Median time from symptom onset to surgery: 48 h (IQR 28–99)",
+        "chunk_references": [
+          "a206e8fa-4ab5-4dd0-8869-1cffd4c53d3d"
+        ]
+      },
+      "technique": {
+        "value": "SDC performed per department guidelines; resection of C1-arch, duraplasty, infarct evacuation optional; EVD placed in right lateral ventricle.",
+        "chunk_references": [
+          "89ed6c33-3b85-47f4-8dd4-43ac730c98f7"
+        ]
+      },
+      "reoperations": {
+        "value": "",
+        "chunk_references": []
+      },
+      "conservative_management": {
+        "value": "",
+        "chunk_references": []
+      }
+    },
+    "arms_outcomes": [
+      {
+        "arm_label": {
+          "value": "SDC (all patients)",
+          "chunk_references": [
+            "a206e8fa-4ab5-4dd0-8869-1cffd4c53d3d"
+          ]
+        },
+        "arm_type": {
+          "value": "surgical",
+          "chunk_references": [
+            "a206e8fa-4ab5-4dd0-8869-1cffd4c53d3d"
+          ]
+        },
+        "assignment_basis": {
+          "value": "All patients treated with SDC for cerebellar infarction at Rigshospitalet between Jan 2009 and Oct 2015",
+          "chunk_references": [
+            "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+          ]
+        },
+        "sample_size": {
+          "value": 22,
+          "chunk_references": [
+            "a206e8fa-4ab5-4dd0-8869-1cffd4c53d3d"
+          ]
+        },
+        "flow": {
+          "value": "23 identified, 1 excluded for missing follow-up, 22 analyzed. 7/22 died within 1 year (5 within 1 week, 1 at 2 months, 1 at 6 months).",
+          "chunk_references": [
+            "00d3befd-fb35-4eaa-8789-48eff4a950f0",
+            "d13ee132-223a-4ec3-a95c-302d13d1bcb0"
+          ]
+        }
+      }
+    ],
+    "predictors_of_outcome": [
+      {
+        "predictor": {
+          "value": "Bilateral infarction",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "effect_size": {
+          "value": "0/12 (0%) favorable vs 6/10 (60%) unfavorable",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "ci": {
+          "value": "",
+          "chunk_references": []
+        },
+        "p_value": {
+          "value": 0.03,
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "analysis_type": {
+          "value": "univariate",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "adjusted_covariates": {
+          "value": "",
+          "chunk_references": []
+        }
+      },
+      {
+        "predictor": {
+          "value": "Brainstem infarction",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "effect_size": {
+          "value": "0/12 (0%) favorable vs 4/10 (40%) unfavorable",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "ci": {
+          "value": "",
+          "chunk_references": []
+        },
+        "p_value": {
+          "value": 0.03,
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "analysis_type": {
+          "value": "univariate",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "adjusted_covariates": {
+          "value": "",
+          "chunk_references": []
+        }
+      },
+      {
+        "predictor": {
+          "value": "Age ≥ 60",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "effect_size": {
+          "value": "3/12 (25%) favorable vs 4/10 (40%) unfavorable",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "ci": {
+          "value": "",
+          "chunk_references": []
+        },
+        "p_value": {
+          "value": 0.65,
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "analysis_type": {
+          "value": "univariate",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "adjusted_covariates": {
+          "value": "",
+          "chunk_references": []
+        }
+      },
+      {
+        "predictor": {
+          "value": "Preoperative GCS ≤ 8",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "effect_size": {
+          "value": "6/12 (50%) favorable vs 6/9 (67%) unfavorable",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "ci": {
+          "value": "",
+          "chunk_references": []
+        },
+        "p_value": {
+          "value": 0.66,
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "analysis_type": {
+          "value": "univariate",
+          "chunk_references": [
+            "f35da07b-5b60-4c67-bdb2-878e18bf5e12"
+          ]
+        },
+        "adjusted_covariates": {
+          "value": "",
+          "chunk_references": []
+        }
+      }
+    ],
+    "quality_assessment": {
+      "selection": {
+        "value": 0,
+        "chunk_references": []
+      },
+      "comparability": {
+        "value": 0,
+        "chunk_references": []
+      },
+      "outcome": {
+        "value": 0,
+        "chunk_references": []
+      },
+      "total": {
+        "value": 0,
+        "chunk_references": []
+      },
+      "category": {
+        "value": "",
+        "chunk_references": []
+      }
+    },
+    "provenance": {
+      "parser_version": {
+        "value": "",
+        "chunk_references": []
+      },
+      "extraction_date": {
+        "value": "",
+        "chunk_references": []
+      }
+    },
+    "validation_flags": {
+      "inclusion_criteria_met": {
+        "value": "Yes",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      },
+      "data_completeness_percent": {
+        "value": 80,
+        "chunk_references": []
+      },
+      "meta_analysis_eligibility": {
+        "value": "Yes",
+        "chunk_references": [
+          "e2dc1888-27fa-4ede-a6f4-b39c0036bd32"
+        ]
+      }
+    }
+  },
+  "extraction": {
+    "citation": {
+      "authors": "Desirée Lindeskog, Alexander Lilja-Cyron, Jesper Kelsen, Marianne Juhler",
+      "year": 2019,
+      "title": "Long-term functional outcome after decompressive suboccipital craniectomy for space-occupying cerebellar infarction",
+      "journal": "Clinical Neurology and Neurosurgery",
+      "doi": "10.1016/j.clineuro.2018.11.023",
+      "pmid": "",
+      "country": "Denmark",
+      "centers": "Rigshospitalet, Copenhagen",
+      "funding": "This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.",
+      "conflicts_of_interest": "None.",
+      "registration": "",
+      "raw_citation": "Lindeskog D, Lilja-Cyron A, Kelsen J, Juhler M. Long-term functional outcome after decompressive suboccipital craniectomy for space-occupying cerebellar infarction. Clinical Neurology and Neurosurgery. 2019;176:47–52. doi:10.1016/j.clineuro.2018.11.023"
+    },
+    "eligibility_picott": {
+      "population": "All patients treated with SDC for a cerebellar infarction at Rigshospitalet (Copenhagen, Denmark) between January 2009 and October 2015 were included. Exclusion: missing 1-year follow-up.",
+      "intervention": "Suboccipital decompressive craniectomy (SDC) for space-occupying cerebellar infarction.",
+      "comparator": "",
+      "outcomes": "Long-term functional outcome at 1 year, measured by modified Rankin Scale (mRS).",
+      "timing": "One year after SDC.",
+      "type": "Retrospective cohort study.",
+      "picott_met": "Yes"
+    },
+    "study_population": {
+      "total_n": 22,
+      "surgical_n": 22,
+      "control_n": 0,
+      "age_median": 53,
+      "age_iqr": "45-62",
+      "sex_male_n": 16,
+      "sex_female_n": 6,
+      "prestroke_mrs": "previous functional independence",
+      "nihss_gcs": "Preoperative GCS (median, IQR): 8 (5-10)",
+      "anticoagulation": "",
+      "treatments": "External ventricular drainage (EVD) in 22/22, EVD before SDC in 9/22, infarct evacuation in 14/22, resection of C1 arch in 2/22."
+    },
+    "surgical_indications": {},
+    "imaging_volumetry": {
+      "vascular_territory": "PICA: 19/22 (86%), SCA: 10/22 (46%), AICA: 8/22 (36%)",
+      "infarct_volume": "",
+      "edema_dynamics": "Maximum swelling is often reached two to four days after stroke ictus.",
+      "peak_swelling_window": "2–4 days after stroke ictus",
+      "brainstem_involvement": "Brainstem infarction in 4/22 (18%)",
+      "supratentorial_involvement": ""
+    },
+    "interventions": {
+      "surgical_types": "Suboccipital decompressive craniectomy (SDC), optional resection of C1-arch, duraplasty, infarct evacuation.",
+      "timing": "Median time from symptom onset to surgery: 48 h (IQR 28–99)",
+      "technique": "SDC performed per department guidelines; resection of C1-arch, duraplasty, infarct evacuation optional; EVD placed in right lateral ventricle.",
+      "reoperations": "",
+      "conservative_management": ""
+    },
+    "arms_outcomes": [
+      {
+        "arm_label": "SDC (all patients)",
+        "arm_type": "surgical",
+        "assignment_basis": "All patients treated with SDC for cerebellar infarction at Rigshospitalet between Jan 2009 and Oct 2015",
+        "sample_size": 22,
+        "flow": "23 identified, 1 excluded for missing follow-up, 22 analyzed. 7/22 died within 1 year (5 within 1 week, 1 at 2 months, 1 at 6 months)."
+      }
+    ],
+    "predictors_of_outcome": [
+      {
+        "predictor": "Bilateral infarction",
+        "effect_size": "0/12 (0%) favorable vs 6/10 (60%) unfavorable",
+        "ci": "",
+        "p_value": 0.03,
+        "analysis_type": "univariate",
+        "adjusted_covariates": ""
+      },
+      {
+        "predictor": "Brainstem infarction",
+        "effect_size": "0/12 (0%) favorable vs 4/10 (40%) unfavorable",
+        "ci": "",
+        "p_value": 0.03,
+        "analysis_type": "univariate",
+        "adjusted_covariates": ""
+      },
+      {
+        "predictor": "Age ≥ 60",
+        "effect_size": "3/12 (25%) favorable vs 4/10 (40%) unfavorable",
+        "ci": "",
+        "p_value": 0.65,
+        "analysis_type": "univariate",
+        "adjusted_covariates": ""
+      },
+      {
+        "predictor": "Preoperative GCS ≤ 8",
+        "effect_size": "6/12 (50%) favorable vs 6/9 (67%) unfavorable",
+        "ci": "",
+        "p_value": 0.66,
+        "analysis_type": "univariate",
+        "adjusted_covariates": ""
+      }
+    ],
+    "quality_assessment": {
+      "selection": 0,
+      "comparability": 0,
+      "outcome": 0,
+      "total": 0,
+      "category": ""
+    },
+    "provenance": {
+      "parser_version": "",
+      "extraction_date": ""
+    },
+    "validation_flags": {
+      "inclusion_criteria_met": "Yes",
+      "data_completeness_percent": 80,
+      "meta_analysis_eligibility": "Yes"
+    }
+  }
+}
